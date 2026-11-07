@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      # Next version = highest v1.0.N tag + 1
+      - name: Version
+        id: v
+        run: |
+          latest=$(git tag -l 'v1.0.*' | sed -E 's/^v1\.0\.([0-9]+).*/\1/' | sort -n | tail -1)
+          patch=$(( ${latest:--1} + 1 ))
+          echo "version=1.0.${patch}" >> "$GITHUB_OUTPUT"
+          sed -i -E "s/^patch = [0-9]+/patch = ${patch}/" .hemtt/project.toml
+
+      - name: Setup HEMTT
+        uses: arma-actions/hemtt@v1
+
+      # Lints, builds and signs the mod; zips it as releases/upz-<version>-<hash>.zip
+      - name: Build signed release
+        run: hemtt release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: upz-${{ steps.v.outputs.version }}
+          path: .hemttout/release
+
+      - name: Publish GitHub release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.v.outputs.version }}
+          name: v${{ steps.v.outputs.version }}
+          files: releases/upz-${{ steps.v.outputs.version }}-*.zip
+          generate_release_notes: true

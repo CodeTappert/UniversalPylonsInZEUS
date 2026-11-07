@@ -14,4 +14,5 @@ author = "Jannik"
 include = [
     "mod.cpp",
     "README.md",
+    "LICENSE",
 ]
