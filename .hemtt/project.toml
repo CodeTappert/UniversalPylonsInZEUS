@@ -8,7 +8,7 @@ minor = 0
 patch = 0
 
 [properties]
-author = "Jannik"
+author = "[RTLS] DerTapp"
 
 [files]
 include = [
