@@ -1,0 +1,17 @@
+name = "Universal Pylons in ZEUS"
+prefix = "upz"
+mainprefix = "z"
+
+[version]
+major = 1
+minor = 0
+patch = 0
+
+[properties]
+author = "Jannik"
+
+[files]
+include = [
+    "mod.cpp",
+    "README.md",
+]
