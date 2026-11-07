@@ -27,8 +27,15 @@ jobs:
           echo "version=1.0.${patch}" >> "$GITHUB_OUTPUT"
           sed -i -E "s/^patch = [0-9]+/patch = ${patch}/" .hemtt/project.toml
 
-      - name: Setup HEMTT
-        uses: arma-actions/hemtt@v1
+      # Plain download via gh (authenticated); arma-actions/hemtt hits the anonymous API rate limit
+      - name: Install HEMTT
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$HOME/bin"
+          gh release download v1.23.1 -R BrettMayson/HEMTT -p linux-x64 -O "$HOME/bin/hemtt"
+          chmod +x "$HOME/bin/hemtt"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
 
       # Lints, builds and signs the mod; zips it as releases/upz-<version>-<hash>.zip
       - name: Build signed release
