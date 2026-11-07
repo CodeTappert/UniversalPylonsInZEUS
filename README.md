@@ -61,7 +61,17 @@ Load `.hemttout/build` in the launcher as a local mod, together with CBA and ZEN
 
 ### CI
 
-[CI](.github/workflows/ci.yml) builds a signed release on every push and pull request (download it from the run's artifacts). Every push to `main` publishes a new GitHub release, versioned `v1.0.N`.
+[CI](.github/workflows/ci.yml) builds a signed release on every push and pull request (download it from the run's artifacts). A push to `main` publishes a GitHub release `v<version>` if that version isn't released yet.
+
+### Releasing
+
+The version lives in [`.hemtt/project.toml`](.hemtt/project.toml) and is shared by GitHub and the Workshop.
+
+1. On `develop`: bump the version in `.hemtt/project.toml` and add an entry to [`CHANGELOG.md`](CHANGELOG.md).
+2. Merge `develop` into `main` → CI publishes the GitHub release.
+3. With Steam running, on `main`: `hemtt publish`. It uploads the build, the Workshop description ([`.github/workshop/description.md`](.github/workshop/description.md)) and the changelog entry to the Workshop item in [`meta.cpp`](meta.cpp).
+
+The Workshop preview image is [`.github/workshop/preview.jpg`](.github/workshop/preview.jpg); it can only be changed with Arma 3 Publisher (Arma 3 Tools).
 
 ## Contributing
 

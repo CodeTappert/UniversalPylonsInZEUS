@@ -18,14 +18,16 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      # Next version = highest v1.0.N tag + 1
+      # Version comes from .hemtt/project.toml (same as the Workshop upload).
+      # A GitHub release is only published if that version has no tag yet.
       - name: Version
         id: v
         run: |
-          latest=$(git tag -l 'v1.0.*' | sed -E 's/^v1\.0\.([0-9]+).*/\1/' | sort -n | tail -1)
-          patch=$(( ${latest:--1} + 1 ))
-          echo "version=1.0.${patch}" >> "$GITHUB_OUTPUT"
-          sed -i -E "s/^patch = [0-9]+/patch = ${patch}/" .hemtt/project.toml
+          version=$(sed -nE 's/^(major|minor|patch) = ([0-9]+)/\2/p' .hemtt/project.toml | paste -sd.)
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
+            echo "released=true" >> "$GITHUB_OUTPUT"
+          fi
 
       # Plain download via gh (authenticated); arma-actions/hemtt hits the anonymous API rate limit
       - name: Install HEMTT
@@ -37,7 +39,7 @@ jobs:
           chmod +x "$HOME/bin/hemtt"
           echo "$HOME/bin" >> "$GITHUB_PATH"
 
-      # Lints, builds and signs the mod; zips it as releases/upz-<version>-<hash>.zip
+      # Lints, builds and signs the mod; zips it as releases/upz-<version>.zip
       - name: Build signed release
         run: hemtt release
 
@@ -47,10 +49,10 @@ jobs:
           path: .hemttout/release
 
       - name: Publish GitHub release
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && steps.v.outputs.released != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.v.outputs.version }}
           name: v${{ steps.v.outputs.version }}
-          files: releases/upz-${{ steps.v.outputs.version }}-*.zip
+          files: releases/upz-${{ steps.v.outputs.version }}.zip
           generate_release_notes: true

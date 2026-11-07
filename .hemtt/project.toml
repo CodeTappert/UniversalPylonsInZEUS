@@ -5,7 +5,8 @@ mainprefix = "z"
 [version]
 major = 1
 minor = 0
-patch = 0
+patch = 1
+git_hash = 0
 
 [properties]
 author = "[RTLS] DerTapp"
@@ -16,3 +17,7 @@ include = [
     "README.md",
     "LICENSE",
 ]
+
+[hemtt.publish]
+description = ".github/workshop/description.md"
+changelog = "CHANGELOG.md"
