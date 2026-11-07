@@ -29,6 +29,12 @@ jobs:
             echo "released=true" >> "$GITHUB_OUTPUT"
           fi
 
+      # hemtt publish needs a changelog entry for the version, so catch a missing one here
+      - name: Check changelog
+        run: |
+          grep -qF "## [${{ steps.v.outputs.version }}]" CHANGELOG.md \
+            || { echo "::error file=CHANGELOG.md::No entry for version ${{ steps.v.outputs.version }}"; exit 1; }
+
       # Plain download via gh (authenticated); arma-actions/hemtt hits the anonymous API rate limit
       - name: Install HEMTT
         env:
