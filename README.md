@@ -14,7 +14,7 @@ It extends the pylon editor of [Zeus Enhanced (ZEN)](https://steamcommunity.com/
 
 ## Download
 
-Get the latest build from the **[Releases page](https://github.com/CodeTappert/UniversalPylonsInZEUS/releases)**.
+**[Subscribe on the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3835596068)** (recommended), or get the latest build from the **[Releases page](https://github.com/CodeTappert/UniversalPylonsInZEUS/releases)**.
 
 Unzip it; it contains the mod folder `@upz`. In the Arma 3 Launcher, go to **Mods → ⋯ More → Add watched folder** (or **Add local mod**) and pick `@upz`.
 
