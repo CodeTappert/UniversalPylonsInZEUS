@@ -1,6 +1,6 @@
 class CfgPatches {
     class upz_main {
-        name = "Universal Pylons in ZEUS";
+        name = "Universal Pylons (Zeus & Eden)";
         author = "[RTLS] DerTapp";
         units[] = {};
         weapons[] = {};

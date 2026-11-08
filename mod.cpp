@@ -1,10 +1,10 @@
-name = "Universal Pylons in ZEUS";
+name = "Universal Pylons (Zeus & Eden)";
 author = "[RTLS] DerTapp";
 picture = "logo_ca.paa";
 logo = "logo_ca.paa";
 logoOver = "logo_ca.paa";
 logoSmall = "logo_ca.paa";
-tooltip = "Universal Pylons in ZEUS";
+tooltip = "Universal Pylons (Zeus & Eden)";
 overview = "Put any pylon weapon on any pylon of any aircraft in the Zeus (ZEN) and Eden pylon menus. Requires CBA and ZEN.";
 action = "https://github.com/CodeTappert/UniversalPylonsInZEUS";
 actionName = "GitHub";

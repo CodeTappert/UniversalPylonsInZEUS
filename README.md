@@ -1,4 +1,4 @@
-# Universal Pylons in ZEUS
+# Universal Pylons (Zeus & Eden)
 
 An Arma 3 mod that lets you put **any pylon weapon on any pylon of any aircraft**, right in the normal pylon menus of **Zeus** and the **Eden Editor**.
 
