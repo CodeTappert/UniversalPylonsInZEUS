@@ -1,15 +1,16 @@
 # Universal Pylons in ZEUS
 
-An Arma 3 mod that lets a Zeus put **any pylon weapon on any pylon of any aircraft**, right in the normal Zeus pylon menu.
+An Arma 3 mod that lets you put **any pylon weapon on any pylon of any aircraft**, right in the normal pylon menus of **Zeus** and the **Eden Editor**.
 
-It extends the pylon editor of [Zeus Enhanced (ZEN)](https://steamcommunity.com/sharedfiles/filedetails/?id=1779063631). No extra module, no extra dialog: double-click an aircraft as usual and every weapon is there.
+In Zeus it extends the pylon editor of [Zeus Enhanced (ZEN)](https://steamcommunity.com/sharedfiles/filedetails/?id=1779063631); in Eden it extends the aircraft's Pylons attributes. No extra module, no extra dialog: open the pylon menu as usual and every weapon is there.
 
 ## Features
 
 - **Every pylon weapon in the game** is listed for every pylon, including weapons from other mods.
 - **Native weapons stay on top**; all other weapons are listed below them in **orange**, with their class name in the tooltip.
 - **Forced loadouts**: on **OK** the loadout is forced onto the aircraft, so non-native weapons stick.
-- Works with presets, mirroring and the pilot/gunner turret buttons of ZEN's editor.
+- **Zeus**: works with presets, mirroring and the pilot/gunner turret buttons of ZEN's editor.
+- **Eden**: forced weapons are saved with the mission and applied in the editor and at mission start.
 - **Multiplayer-ready**: the loadout is applied on whichever machine owns the aircraft.
 
 ## Download
@@ -29,15 +30,23 @@ In multiplayer, load the mod on the **server and all clients**.
 
 ## Usage
 
+**Zeus**
+
 1. Open Zeus and double-click an aircraft with pylons (or right-click → Pylons).
 2. Pick any weapon for each pylon. Orange entries are non-native weapons.
 3. Click **OK**.
+
+**Eden Editor**
+
+1. Double-click an aircraft with pylons and expand the **Pylons** category.
+2. Pick any weapon for each pylon. Orange entries are non-native weapons.
+3. Click **OK**. The weapons are saved with the mission.
 
 ## Known limitations
 
 - Weapons on pylons they were not designed for may look misplaced on the model. That's the engine.
 - When a forced weapon is later replaced, the old weapon may stay in the weapon list with no ammo. Harmless.
-- Only the Zeus pylon menu is extended, not the Eden Editor.
+- Missions that use Eden forced weapons need the mod loaded; without it, those pylons fall back to the vanilla loadout.
 
 ## Build from source
 
@@ -55,9 +64,16 @@ Load `.hemttout/build` in the launcher as a local mod, together with CBA and ZEN
 
 | File | Purpose |
 | --- | --- |
-| [`addons/main/config.cpp`](addons/main/config.cpp) | Registers the functions and hooks the `onLoad` of ZEN's pylon dialog (`zen_pylons_display`). |
-| [`fn_addAllMagazines.sqf`](addons/main/functions/fn_addAllMagazines.sqf) | Runs one frame after the dialog opens and appends all pylon magazines to each pylon combo box. |
+| [`addons/main/config.cpp`](addons/main/config.cpp) | Registers the functions, hooks the `onLoad` of ZEN's pylon dialog (`zen_pylons_display`) and adds the invisible Eden attribute `upz_forcedPylons` to the Pylons category. |
+| [`fn_extendCombo.sqf`](addons/main/functions/fn_extendCombo.sqf) | Shared: appends all pylon magazines (orange) to one pylon combo box. |
+| **Zeus** | |
+| [`fn_addAllMagazines.sqf`](addons/main/functions/fn_addAllMagazines.sqf) | Runs one frame after ZEN's dialog opens and extends each pylon combo box. |
 | [`fn_forceLoadout.sqf`](addons/main/functions/fn_forceLoadout.sqf) | Listens to ZEN's `zen_pylons_setLoadout` event and re-applies the loadout with `setPylonLoadout` forced. |
+| **Eden** | The vanilla Pylons attribute is engine-driven and only saves compatible magazines, so `upz_forcedPylons` handles the rest: |
+| [`fn_edenLoad.sqf`](addons/main/functions/fn_edenLoad.sqf) | `attributeLoad`: waits until the engine created its pylon combo boxes (when the category is expanded), extends them and selects saved forced magazines. |
+| [`fn_edenSave.sqf`](addons/main/functions/fn_edenSave.sqf) | `attributeSave`: stores only the appended (non-native) picks. |
+| [`fn_edenApply.sqf`](addons/main/functions/fn_edenApply.sqf) | `expression`: forces the saved magazines onto the aircraft, in the editor and at mission start. |
+| [`fn_edenPylonCombos.sqf`](addons/main/functions/fn_edenPylonCombos.sqf) | Finds the engine's pylon combo boxes (`LoadOutTemplateBox`) in pylon order. |
 
 ### CI
 

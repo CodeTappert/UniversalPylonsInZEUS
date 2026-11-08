@@ -1,22 +1,25 @@
 # Universal Pylons in ZEUS
 
-Put **any pylon weapon on any pylon of any aircraft**, right in the normal Zeus pylon menu.
+Put **any pylon weapon on any pylon of any aircraft**, right in the normal pylon menus of **Zeus** and the **Eden Editor**.
 
-This mod extends the pylon editor of [Zeus Enhanced (ZEN)](https://steamcommunity.com/sharedfiles/filedetails/?id=1779063631). No extra module, no extra dialog: double-click an aircraft as usual and every weapon is there.
+In Zeus it extends the pylon editor of [Zeus Enhanced (ZEN)](https://steamcommunity.com/sharedfiles/filedetails/?id=1779063631); in Eden it extends the aircraft's Pylons attributes. No extra module, no extra dialog: open the pylon menu as usual and every weapon is there.
 
 ## Features
 
 - **Every pylon weapon in the game** is listed for every pylon, including weapons from other mods.
 - **Native weapons stay on top**; all other weapons are listed below them in **orange**.
 - **Forced loadouts**: on OK the loadout is forced onto the aircraft, so non-native weapons stick.
-- Works with presets, mirroring and the pilot/gunner turret buttons of ZEN's editor.
+- **Zeus**: works with presets, mirroring and the pilot/gunner turret buttons of ZEN's editor.
+- **Eden**: forced weapons are saved with the mission and applied in the editor and at mission start.
 - Multiplayer-ready: the loadout is applied on whichever machine owns the aircraft.
 
 ## Usage
 
-1. Open Zeus and double-click an aircraft with pylons (or right-click → Pylons).
-2. Pick any weapon for each pylon. Orange entries are non-native weapons.
-3. Click OK.
+**Zeus:** double-click an aircraft with pylons (or right-click → Pylons), pick any weapon for each pylon, click OK.
+
+**Eden Editor:** double-click an aircraft with pylons, expand the **Pylons** category, pick any weapon for each pylon, click OK. The weapons are saved with the mission.
+
+Orange entries are non-native weapons.
 
 ## Requirements
 
@@ -29,7 +32,7 @@ In multiplayer, load the mod on the **server and all clients**. The mod is signe
 
 - Weapons on pylons they were not designed for may look misplaced on the model. That's the engine.
 - When a forced weapon is later replaced, the old weapon may stay in the weapon list with no ammo. Harmless.
-- Only the Zeus pylon menu is extended, not the Eden Editor.
+- Missions that use Eden forced weapons need the mod loaded; without it, those pylons fall back to the vanilla loadout.
 
 ## Source & issues
 

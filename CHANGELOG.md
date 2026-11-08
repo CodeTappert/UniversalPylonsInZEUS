@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2026-11-08
+
+### Added
+
+- Eden Editor support: the aircraft's Pylons attributes list every pylon weapon (non-native ones in orange). Forced weapons are saved with the mission and applied in the editor and at mission start.
+
 ## [1.0.1] - 2026-11-07
 
 ### Added
