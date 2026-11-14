@@ -1,5 +1,7 @@
 # Universal Pylons (Zeus & Eden)
 
+<img src=".github/workshop/preview.jpg" alt="Universal Pylons in Zeus & Eden: any weapon, any pylon, any aircraft" width="360">
+
 An Arma 3 mod that lets you put **any pylon weapon on any pylon of any aircraft**, right in the normal pylon menus of **Zeus** and the **Eden Editor**.
 
 In Zeus it extends the pylon editor of [Zeus Enhanced (ZEN)](https://steamcommunity.com/sharedfiles/filedetails/?id=1779063631); in Eden it extends the aircraft's Pylons attributes. No extra module, no extra dialog: open the pylon menu as usual and every weapon is there.
